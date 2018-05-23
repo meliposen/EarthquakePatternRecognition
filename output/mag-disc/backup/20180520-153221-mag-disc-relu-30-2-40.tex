@@ -1,0 +1,968 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{mag-disc}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Predict the magnitude of the next
+eathquake}\label{predict-the-magnitude-of-the-next-eathquake}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{Utils}
+        \PY{k+kn}{import} \PY{n+nn}{pydoc}
+        \PY{k+kn}{from} \PY{n+nn}{Utils} \PY{k}{import} \PY{n}{DataSet}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{models} \PY{k}{import} \PY{n}{Sequential}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{Dense}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{Dropout}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers} \PY{k}{import} \PY{n}{LSTM}
+        \PY{k+kn}{from} \PY{n+nn}{keras} \PY{k}{import} \PY{n}{optimizers}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{utils} \PY{k}{import} \PY{n}{to\PYZus{}categorical}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{callbacks} \PY{k}{import} \PY{n}{EarlyStopping}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{layers}\PY{n+nn}{.}\PY{n+nn}{embeddings} \PY{k}{import} \PY{n}{Embedding}
+        \PY{k+kn}{from} \PY{n+nn}{keras}\PY{n+nn}{.}\PY{n+nn}{preprocessing} \PY{k}{import} \PY{n}{sequence}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{patches} \PY{k}{as} \PY{n+nn}{mpatches}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{import} \PY{n}{cm}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/opt/conda/lib/python3.6/site-packages/h5py/\_\_init\_\_.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from .\_conv import register\_converters as \_register\_converters
+Using TensorFlow backend.
+
+    \end{Verbatim}
+
+    \subsection{Name of current file}\label{name-of-current-file}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{current\PYZus{}file} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{mag\PYZhy{}disc}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{setting} \PY{o}{=} \PY{l+m+mi}{0}
+\end{Verbatim}
+
+
+    \section{Settings, formatData:}\label{settings-formatdata}
+
+\begin{longtable}[]{@{}l@{}}
+\toprule
+\textbf{config:} (input data)\tabularnewline
+\midrule
+\endhead
+\textbf{0: Includes (9 features)}\tabularnewline
+- Time\tabularnewline
+- Magnitude\tabularnewline
+- Moment Tensor Exponent\tabularnewline
+- Moment Tensor, 6 values\tabularnewline
+\bottomrule
+\end{longtable}
+
+    \subsection{Variable input}\label{variable-input}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{call} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{call}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+        \PY{n}{call}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{EarlyStopping}\PY{p}{(}\PY{n}{patience}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{act}\PY{p}{,} \PY{n}{day}\PY{p}{,} \PY{n}{epo}\PY{p}{,} \PY{n}{cal}\PY{p}{,} \PY{n}{ear} \PY{o}{=} \PY{n}{Utils}\PY{o}{.}\PY{n}{experiment\PYZus{}settings}\PY{p}{(}\PY{n}{setting}\PY{p}{)}
+        
+        \PY{n}{activation} \PY{o}{=} \PY{n}{act}
+        \PY{n}{maxdays} \PY{o}{=} \PY{n}{day}
+        \PY{n}{epochs} \PY{o}{=} \PY{n}{epo}
+        \PY{n}{callbacks} \PY{o}{=} \PY{n}{call}\PY{p}{[}\PY{n}{cal}\PY{p}{]}
+        \PY{n}{early} \PY{o}{=} \PY{n}{ear}
+\end{Verbatim}
+
+
+    \subsection{Constant in experiments}\label{constant-in-experiments}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{scale} \PY{o}{=} \PY{l+m+mi}{1}
+        \PY{n}{shape} \PY{o}{=} \PY{l+m+mi}{1}
+        \PY{n}{categories\PYZus{}in} \PY{o}{=} \PY{l+m+mi}{10}
+        \PY{n}{categories\PYZus{}out} \PY{o}{=} \PY{l+m+mi}{10}
+\end{Verbatim}
+
+
+    \subsection{Get data from database, and format predictors and
+target}\label{get-data-from-database-and-format-predictors-and-target}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{ds} \PY{o}{=} \PY{n}{DataSet}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1972/01/01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2019/01/01}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{maxdays}\PY{o}{=}\PY{n}{maxdays}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Created new DataSet containing 2157 seismic events, ( will be using 2155 )
+Radius: 1000  km
+Center: 46 °, 151 °
+From: 1972/01/01 
+To: 2019/01/01
+
+    \end{Verbatim}
+
+    \subsection{Predictors}\label{predictors}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{n\PYZus{}predictors} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{n}{predict\PYZus{}txt} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+            \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predictors}\PY{l+s+si}{\PYZob{}n\PYZus{}predictors\PYZcb{}}\PY{l+s+s1}{ = ds.formatData(config=}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{, norm=scale, shape=shape)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predict\PYZus{}txt.append(}\PY{l+s+se}{\PYZbs{}\PYZdq{}}\PY{l+s+s1}{Data config }\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{: predictors}\PY{l+s+si}{\PYZob{}n\PYZus{}predictors\PYZcb{}}\PY{l+s+s1}{ \PYZhy{} input values }\PY{l+s+se}{\PYZbs{}}
+        \PY{l+s+s1}{between \PYZhy{}1 and 1}\PY{l+s+se}{\PYZbs{}\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{predict\PYZus{}txt}\PY{p}{[}\PY{n}{n\PYZus{}predictors}\PY{p}{]}\PY{p}{)}
+            \PY{n}{n\PYZus{}predictors} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+            \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predictors}\PY{l+s+si}{\PYZob{}n\PYZus{}predictors\PYZcb{}}\PY{l+s+s1}{ = ds.formatDataDiscrete(categories=categories\PYZus{}in, }\PY{l+s+se}{\PYZbs{}}
+        \PY{l+s+s1}{    config=}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{, norm=scale, shape=shape)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predict\PYZus{}txt.append(}\PY{l+s+se}{\PYZbs{}\PYZdq{}}\PY{l+s+s1}{Data config }\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{: predictors}\PY{l+s+si}{\PYZob{}n\PYZus{}predictors\PYZcb{}}\PY{l+s+s1}{ \PYZhy{} discrete input }\PY{l+s+se}{\PYZbs{}}
+        \PY{l+s+s1}{values (}\PY{l+s+si}{\PYZob{}categories\PYZus{}in\PYZcb{}}\PY{l+s+s1}{ categories)}\PY{l+s+se}{\PYZbs{}\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{predict\PYZus{}txt}\PY{p}{[}\PY{n}{n\PYZus{}predictors}\PY{p}{]}\PY{p}{)}
+            \PY{n}{n\PYZus{}predictors} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Data config 0: predictors0 - input values between -1 and 1
+Data config 0: predictors1 - discrete input values (10 categories)
+Data config 1: predictors2 - input values between -1 and 1
+Data config 1: predictors3 - discrete input values (10 categories)
+Data config 2: predictors4 - input values between -1 and 1
+Data config 2: predictors5 - discrete input values (10 categories)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{pred\PYZus{}shape} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+        \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}predictors}\PY{p}{)}\PY{p}{:}
+            \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pred\PYZus{}shape.append(predictors}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{.shape[2])}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Feature size of predictors:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{pred\PYZus{}shape}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Feature size of predictors: [9, 90, 13, 130, 22, 220]
+
+    \end{Verbatim}
+
+    \subsection{Targets}\label{targets}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{n\PYZus{}targets} \PY{o}{=} \PY{l+m+mi}{1}
+        \PY{n}{target\PYZus{}txt} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{target\PYZus{}txt}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{targets0 \PYZhy{} Predict the magitude of the next earthquake. Divide output into }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PYZbs{}
+        \PY{n+nb}{str}\PY{p}{(}\PY{n}{categories\PYZus{}out}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ categories.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{target\PYZus{}txt}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+        \PY{n}{targets0} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{gt\PYZus{}mag\PYZus{}disc}\PY{p}{(}\PY{n}{categories}\PY{o}{=}\PY{n}{categories\PYZus{}out}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+targets0 - Predict the magitude of the next earthquake. Divide output into 10 categories.
+
+    \end{Verbatim}
+
+    \section{Split data for training and
+testing}\label{split-data-for-training-and-testing}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{splitat} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{predictors0}\PY{p}{)} \PY{o}{*} \PY{o}{.}\PY{l+m+mi}{7}\PY{p}{)}
+         \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}predictors}\PY{p}{)}\PY{p}{:}
+             \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{input\PYZus{}train}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{, input\PYZus{}test}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{ = predictors}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{[ : splitat] , predictors}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{[splitat : ]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{k} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}targets}\PY{p}{)}\PY{p}{:}
+             \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{output\PYZus{}train}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{, output\PYZus{}test}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{ = targets}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{[ : splitat] , targets}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{[splitat : ]}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{Train and test}\label{train-and-test}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}predictors}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}targets}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{ = Sequential()}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{.add(LSTM((100), return\PYZus{}sequences=False, use\PYZus{}bias=True, }\PY{l+s+se}{\PYZbs{}}
+         \PY{l+s+s1}{        input\PYZus{}shape=(1, pred\PYZus{}shape[}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+s1}{])))}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{.add(Dense(categories\PYZus{}out, activation=activation))}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{.compile(loss=}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{binary\PYZus{}crossentropy}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{, optimizer=}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{, metrics=[}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{mae}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{])}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model\PYZus{}training}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{ = model}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{.fit(input\PYZus{}train}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+s1}{, output\PYZus{}train}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{, }\PY{l+s+se}{\PYZbs{}}
+         \PY{l+s+s1}{        validation\PYZus{}data = (input\PYZus{}test}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+s1}{, output\PYZus{}test}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{), epochs = epochs, }\PY{l+s+se}{\PYZbs{}}
+         \PY{l+s+s1}{        verbose = 0, callbacks = callbacks)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{Analyze learning}\label{analyze-learning}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{p} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}predictors}\PY{p}{)}\PY{p}{:}
+                
+             \PY{n}{patches} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predictions}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+             \PY{n}{color} \PY{o}{=} \PY{n+nb}{iter}\PY{p}{(}\PY{n}{cm}\PY{o}{.}\PY{n}{rainbow}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n\PYZus{}targets}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}targets}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{c} \PY{o}{=} \PY{n+nb}{next}\PY{p}{(}\PY{n}{color}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plt.plot(model\PYZus{}training}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{.history[}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{val\PYZus{}loss}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{], c=c)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{p.append(mpatches.Patch(color=c, label=}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{targets}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+se}{\PYZbs{}\PYZsq{}}\PY{l+s+s1}{))}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{patches}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Epochs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Validation score}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{handles}\PY{o}{=}\PY{n}{patches}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_22_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_22_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_22_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_22_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_22_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_22_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{Predict based on model}\label{predict-based-on-model}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}predictors}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}targets}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{modpred}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{ = model}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{.predict(input\PYZus{}test}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \section{Plot raw output}\label{plot-raw-output}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{style}\PY{o}{.}\PY{n}{use}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{fivethirtyeight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{types} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{n\PYZus{}types} \PY{o}{=} \PY{l+m+mi}{0}
+         
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}predictors}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}targets}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{title} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{type }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{: predictions }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ and target }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{j}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{plt.plot(modpred}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{[:],}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{bx}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{types}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+                 \PY{n}{n\PYZus{}types} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_26_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_26_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_26_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_26_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_26_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_26_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{Measure accuracy}\label{measure-accuracy}
+
+    \subsection{Create set based on normal distributed
+average}\label{create-set-based-on-normal-distributed-average}
+
+(Baseline)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{n\PYZus{}dummy} \PY{o}{=} \PY{l+m+mi}{10}
+         \PY{n}{dummyset} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{getGroundTruthNextMag}\PY{p}{(}\PY{p}{)}
+         \PY{n}{minim} \PY{o}{=} \PY{n+nb}{min}\PY{p}{(}\PY{n}{dummyset}\PY{p}{)}
+         \PY{n}{maxim} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n}{dummyset}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{dummy} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{dummy\PYZus{}disc} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}dummy}\PY{p}{)}\PY{p}{:}
+             \PY{n}{dummy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Utils}\PY{o}{.}\PY{n}{S\PYZus{}model\PYZus{}Predict}\PY{p}{(}\PY{n}{dummyset}\PY{p}{,} \PY{n}{enable\PYZus{}random\PYZus{}normal}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{)}
+             \PY{n}{dummy}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n}{dummy}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{splitat} \PY{p}{:} \PY{p}{]}
+             \PY{n}{dummy\PYZus{}disc}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Utils}\PY{o}{.}\PY{n}{getDiscr3t3}\PY{p}{(}\PY{n}{categories\PYZus{}out}\PY{p}{,} \PY{n}{dummy}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{minim}\PY{p}{,} \PY{n}{maxim}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Plot baseline prediction}\label{plot-baseline-prediction}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{perc\PYZus{}avg\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}dummy}\PY{p}{)}\PY{p}{:}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Baseline }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+}  \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}
+             \PY{n}{perc\PYZus{}avg\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Utils}\PY{o}{.}\PY{n}{accu\PYZus{}plot\PYZus{}disc}\PY{p}{(}\PY{n}{dummy\PYZus{}disc}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{output\PYZus{}test0}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{dummy\PYZus{}avg} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{average}\PY{p}{(}\PY{n}{perc\PYZus{}avg\PYZus{}list}\PY{p}{)}
+             
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Average of baseline: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{dummy\PYZus{}avg}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 165
+Number of wrong: 482
+Percent correct: 26\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 186
+Number of wrong: 461
+Percent correct: 29\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_4.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 176
+Number of wrong: 471
+Percent correct: 27\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_6.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 155
+Number of wrong: 492
+Percent correct: 24\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_8.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 173
+Number of wrong: 474
+Percent correct: 27\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_10.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 188
+Number of wrong: 459
+Percent correct: 29\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_12.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 155
+Number of wrong: 492
+Percent correct: 24\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_14.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 171
+Number of wrong: 476
+Percent correct: 26\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_16.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 190
+Number of wrong: 457
+Percent correct: 29\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_33_18.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 155
+Number of wrong: 492
+Percent correct: 24\%
+-----------------------------------------
+Average of baseline: 26.5\%
+-----------------------------------------
+
+    \end{Verbatim}
+
+    \subsection{Plot accuracy of models}\label{plot-accuracy-of-models}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Plotting models:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{percentage} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{n\PYZus{}types} \PY{o}{=} \PY{l+m+mi}{0}
+         
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}predictors}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{n\PYZus{}targets}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{title} \PY{o}{=} \PY{n}{types}\PY{p}{[}\PY{n}{n\PYZus{}types}\PY{p}{]}
+                 \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{title}\PY{p}{)}
+                 \PY{n}{exec}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{percent = Utils.accu\PYZus{}plot\PYZus{}disc(modpred}\PY{l+s+si}{\PYZob{}i\PYZcb{}}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{, output\PYZus{}test}\PY{l+s+si}{\PYZob{}j\PYZcb{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{percentage}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{percent}\PY{p}{)}
+                 \PY{n}{n\PYZus{}types} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+-----------------------------------------
+Plotting models:
+-----------------------------------------
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_35_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 242
+Number of wrong: 405
+Percent correct: 37\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_35_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 259
+Number of wrong: 388
+Percent correct: 40\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_35_5.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 191
+Number of wrong: 456
+Percent correct: 30\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_35_7.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 248
+Number of wrong: 399
+Percent correct: 38\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_35_9.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 237
+Number of wrong: 410
+Percent correct: 37\%
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{mag-disc_files/mag-disc_35_11.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Number of correct: 257
+Number of wrong: 390
+Percent correct: 40\%
+
+    \end{Verbatim}
+
+    \subsection{Print summary}\label{print-summary}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{best\PYZus{}percentage} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n}{percentage}\PY{p}{)}
+         \PY{n}{best\PYZus{}per\PYZus{}pos} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{percentage}\PY{p}{)} \PY{k}{if} \PY{n}{j} \PY{o}{==} \PY{n}{best\PYZus{}percentage}\PY{p}{]}
+         \PY{n}{best\PYZus{}pp} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{n}\PY{p}{)} \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n}{best\PYZus{}per\PYZus{}pos}\PY{p}{)}
+         \PY{n}{diff} \PY{o}{=} \PY{n}{best\PYZus{}percentage} \PY{o}{\PYZhy{}} \PY{n}{dummy\PYZus{}avg}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model: Percentage list for diffent types of input:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{percentage}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model: Best percentage: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{best\PYZus{}percentage}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Model: Best performing network type: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{best\PYZus{}pp}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Baseline: Average percentage: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{dummy\PYZus{}avg}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Difference, baseline vs. model: }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{diff}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Types:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{types}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{line}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Predictors:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{predict\PYZus{}txt}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{line}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Targets:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{target\PYZus{}txt}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{line}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Model: Percentage list for diffent types of input: [37, 40, 30, 38, 37, 40]
+Model: Best percentage: 40\%
+Model: Best performing network type: 1,5
+-----------------------------------------
+Baseline: Average percentage: 26\%
+-----------------------------------------
+Difference, baseline vs. model: 13\%
+-----------------------------------------
+Types:
+-----------------------------------------
+type 0: predictions 0 and target 0
+type 1: predictions 1 and target 0
+type 2: predictions 2 and target 0
+type 3: predictions 3 and target 0
+type 4: predictions 4 and target 0
+type 5: predictions 5 and target 0
+-----------------------------------------
+Predictors:
+-----------------------------------------
+Data config 0: predictors0 - input values between -1 and 1
+Data config 0: predictors1 - discrete input values (10 categories)
+Data config 1: predictors2 - input values between -1 and 1
+Data config 1: predictors3 - discrete input values (10 categories)
+Data config 2: predictors4 - input values between -1 and 1
+Data config 2: predictors5 - discrete input values (10 categories)
+-----------------------------------------
+Targets:
+-----------------------------------------
+targets0 - Predict the magitude of the next earthquake. Divide output into 10 categories.
+
+    \end{Verbatim}
+
+    \section{Backup the notebook}\label{backup-the-notebook}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{input}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Press enter to backup the notebook (save first)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{path} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./output/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{current\PYZus{}file} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{epochs} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{epochs}\PY{p}{)} \PY{o}{+} \PY{n}{early}
+        \PY{n}{output\PYZus{}file} \PY{o}{=} \PY{n}{Utils}\PY{o}{.}\PY{n}{join\PYZus{}list}\PY{p}{(}\PY{p}{[}\PY{n}{current\PYZus{}file}\PY{p}{,} \PY{n}{activation}\PY{p}{,} \PY{n}{maxdays}\PY{p}{,} \PY{n}{epochs}\PY{p}{,} \PY{n}{best\PYZus{}percentage}\PY{p}{]}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+        
+        \PY{n}{type\PYZus{}perc} \PY{o}{=} \PY{n}{Utils}\PY{o}{.}\PY{n}{join\PYZus{}list}\PY{p}{(}\PY{n}{percentage}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{|}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{infolist} \PY{o}{=} \PY{p}{[}\PY{n}{i}\PY{p}{,} \PY{n}{best\PYZus{}percentage}\PY{p}{,} \PY{n}{dummy\PYZus{}avg}\PY{p}{,} \PY{n}{diff}\PY{p}{,} \PY{n}{best\PYZus{}pp}\PY{p}{,} \PY{n}{activation}\PY{p}{,} \PY{n}{maxdays}\PY{p}{,} \PY{n}{epochs}\PY{p}{,} \PY{n}{categories\PYZus{}out}\PY{p}{,} \PY{n}{type\PYZus{}perc}\PY{p}{]}
+        
+        \PY{n}{out\PYZus{}org} \PY{o}{=} \PY{n}{Utils}\PY{o}{.}\PY{n}{org\PYZus{}table}\PY{p}{(}\PY{p}{[}\PY{n}{infolist}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PYZpc{}\PYZpc{}bash \PYZhy{}s \PY{l+s+s2}{\PYZdq{}}\PY{n+nv}{\PYZdl{}current\PYZus{}file}\PY{l+s+s2}{\PYZdq{}} \PY{l+s+s2}{\PYZdq{}}\PY{n+nv}{\PYZdl{}path}\PY{l+s+s2}{\PYZdq{}} \PY{l+s+s2}{\PYZdq{}}\PY{n+nv}{\PYZdl{}output\PYZus{}file}\PY{l+s+s2}{\PYZdq{}} \PY{l+s+s2}{\PYZdq{}}\PY{n+nv}{\PYZdl{}out\PYZus{}org}\PY{l+s+s2}{\PYZdq{}}
+        jupyter nbconvert \PYZhy{}\PYZhy{}to html \PY{n+nv}{\PYZdl{}1}.ipynb
+        mv \PY{n+nv}{\PYZdl{}1}.html \PY{n+nv}{\PYZdl{}2}\PY{k}{\PYZdl{}(}date +\PY{l+s+s2}{\PYZdq{}\PYZpc{}Y\PYZpc{}m\PYZpc{}d\PYZhy{}\PYZpc{}H\PYZpc{}M\PYZpc{}S\PYZdq{}}\PY{k}{)}\PYZhy{}\PY{n+nv}{\PYZdl{}3}.html
+        jupyter nbconvert \PYZhy{}\PYZhy{}to latex \PY{n+nv}{\PYZdl{}1}.ipynb
+        mv \PY{n+nv}{\PYZdl{}1}.tex \PY{n+nv}{\PYZdl{}2}backup/\PY{k}{\PYZdl{}(}date +\PY{l+s+s2}{\PYZdq{}\PYZpc{}Y\PYZpc{}m\PYZpc{}d\PYZhy{}\PYZpc{}H\PYZpc{}M\PYZpc{}S\PYZdq{}}\PY{k}{)}\PYZhy{}\PY{n+nv}{\PYZdl{}3}.tex
+        mv \PY{n+nv}{\PYZdl{}1}\PYZus{}files \PY{n+nv}{\PYZdl{}2}backup/\PY{k}{\PYZdl{}(}date +\PY{l+s+s2}{\PYZdq{}\PYZpc{}Y\PYZpc{}m\PYZpc{}d\PYZhy{}\PYZpc{}H\PYZpc{}M\PYZpc{}S\PYZdq{}}\PY{k}{)}\PYZhy{}\PY{n+nv}{\PYZdl{}3}
+        cp \PY{n+nv}{\PYZdl{}1}.ipynb \PY{n+nv}{\PYZdl{}2}backup/notebook/\PY{k}{\PYZdl{}(}date +\PY{l+s+s2}{\PYZdq{}\PYZpc{}Y\PYZpc{}m\PYZpc{}d\PYZhy{}\PYZpc{}H\PYZpc{}M\PYZpc{}S\PYZdq{}}\PY{k}{)}\PYZhy{}\PY{n+nv}{\PYZdl{}3}.ipynb
+        \PY{n+nb}{echo} \PY{n+nv}{\PYZdl{}4} \PYZgt{}\PYZgt{} \PY{n+nv}{\PYZdl{}2}info.org
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
